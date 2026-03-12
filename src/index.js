@@ -7,6 +7,8 @@ homeBtn();
 menuBtn();
 aboutBtn();
 
+document.getElementById("home-btn").click();
+
 // import odinImage from "./odin.png";
 // const image = document.createElement("img");
 // image.src = odinImage;

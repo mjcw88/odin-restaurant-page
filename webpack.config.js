@@ -1,6 +1,5 @@
 import path from "node:path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-
 export default {
   mode: "development",
   entry: "./src/index.js",
@@ -12,6 +11,10 @@ export default {
   devtool: "eval-source-map",
   devServer: {
     watchFiles: ["./src/template.html"],
+  },
+  watchOptions: {
+    poll: 1000,
+    aggregateTimeout: 300,
   },
   plugins: [
     new HtmlWebpackPlugin({
