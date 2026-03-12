@@ -1,10 +1,13 @@
 import "./styles.css";
-import { greeting } from "./greeting.js";
-import odinImage from "./odin.png";
+import { homeBtn } from "./home.js";
+import { menuBtn } from "./menu.js";
+import { aboutBtn } from "./about.js";
 
-console.log(greeting);
+homeBtn();
+menuBtn();
+aboutBtn();
 
-const image = document.createElement("img");
-image.src = odinImage;
-
-document.body.appendChild(image);
+// import odinImage from "./odin.png";
+// const image = document.createElement("img");
+// image.src = odinImage;
+// document.body.appendChild(image);

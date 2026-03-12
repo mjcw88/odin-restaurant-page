@@ -1,3 +1,17 @@
+:root {
+    --padding: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  background-color: rebeccapurple;
+    min-height: 100vh;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: var(--padding);
 }
