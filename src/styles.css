@@ -44,11 +44,43 @@ nav {
 
 #content {
     display: flex;
-    flex: 1;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    flex: 1;
     padding: var(--padding);
     background-color: var(--lightBlue);
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
+}
+
+.menu-container,
+.contact-container {
+    display: grid;
+    gap: 2rem;
+    width: 100%;
+}
+
+.home-container > div,
+.menu-container > div,
+.contact-container > div {
+    text-align: center;
+    border: 0.25rem solid black;
+    border-radius: 1rem;
+    background-color: white;
+    padding: 10px;
+}
+
+
+.shakes-prices-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 }
 
 @media only screen and (min-width: 768px) {
