@@ -1,47 +1,62 @@
 const content = document.getElementById("content");
 const btn = document.getElementById("contact-btn");
 
+import background from "./images/dayanara-peenee-HuIJUp6gTDI-unsplash.jpg";
+
 export function contactBtn() {
     btn.addEventListener("click", renderContact);
 }
 
 function renderContact() {
-    const contacts = [
-        { name: "General Enquiries", email: "hello@nobullburgers.com" },
-        { name: "Press & PR",  email: "press@nobullburgers.com" },
-        { name: "Employment",  email: "jobs@nobullburgers.com" },
-    ];
+    // Add background
+    const header = document.getElementById("header");
+    header.style.backgroundImage = `url(${background})`;
 
-    function createItem({ name, email }) {
-        const item = document.createElement("div");
-
-        const itemContainer = document.createElement("div");
-        itemContainer.className = "menu-item";
-
-        const nameEl = document.createElement("h2");
-        nameEl.textContent = name;
-
-        const emailEl = document.createElement("div");
-        emailEl.textContent = email;
-
-        itemContainer.append(nameEl);
-        item.append(itemContainer, emailEl);
-        return item;
-    }
-
+    // Clear page before rendering new html
     content.innerHTML = "";
 
-    const containerHeader = document.createElement("div");
-    containerHeader.className = "contact-container-header";
+    // Contact data
+    const contacts = [
+        { header: "General Enquiries", email: "hello@nobullburgers.com" },
+        { header: "Press & PR", email: "press@nobullburgers.com" },
+        { header: "Employment", email: "jobs@nobullburgers.com"  },
+    ];
 
-    const header = document.createElement("h1");
-    header.textContent = "Contact Us";
+    // Helper function to create element with optional className and textContent
+    const createElement = (tag, className = null, textContent = null) => {
+        const el = document.createElement(tag);
+        if (className) el.className = className;
+        if (textContent) el.textContent = textContent;
+        return el;
+    };
 
-    containerHeader.append(header);
+    // Create main container
+    const contactPageFullContainer = createElement("div", "contact-page-full-container");
 
-    const contact = document.createElement("div");
-    contact.className = "contact-container";
-    contact.append(...contacts.map(createItem));
+    // Page header
+    const contactPageContainerHeader = createElement("div", "contact-page-container");
+    const contactsHeader = createElement("div", "contact-page-header");
+    contactsHeader.append(createElement("h1", null, "Contact Us"));
+    contactPageContainerHeader.append(contactsHeader);
 
-    content.append(containerHeader, contact);
+    contactPageFullContainer.append(contactPageContainerHeader);
+
+    const contactPageContainerBody = createElement("div", "contact-page-container");
+    contactPageFullContainer.append(contactPageContainerBody);
+
+    // Contact section
+    contacts.forEach(({ header, email }) => {
+        const contactPageContainer = createElement("div", "contact-container");
+
+        const contactPageHeader = createElement("div", "contact-page-header");
+        contactPageHeader.appendChild(createElement("h1", null, header));
+
+        const contactPageContent = createElement("div", "contact-page-content");
+        contactPageContent.appendChild(createElement("p", null, email));
+
+        contactPageContainer.append(contactPageHeader, contactPageContent);
+        contactPageContainerBody.append(contactPageContainer);
+    });
+
+    content.append(contactPageFullContainer);
 }

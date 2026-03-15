@@ -1,50 +1,71 @@
 const content = document.getElementById("content");
 const btn = document.getElementById("home-btn");
 
+import background from "./images/spencer-davis-R_J6KjC68E4-unsplash.jpg";
+
 export function homeBtn() {
     btn.addEventListener("click", renderHome);
 }
 
 function renderHome() {
-    function createSection(className, headerText, ...children) {
-        const section = document.createElement("div");
-        section.className = className;
+    // Add background
+    const header = document.getElementById("header");
+    header.style.backgroundImage = `url(${background})`;
 
-        const headerDiv = document.createElement("div");
-        const header = document.createElement("h2");
-        header.textContent = headerText;
-        headerDiv.appendChild(header);
-        section.appendChild(headerDiv);
-
-        children.forEach(({ tag = "div", text }) => {
-            const el = document.createElement(tag);
-            el.textContent = text;
-            section.appendChild(el);
-        });
-
-        return section;
-    }
-
+    // Clear page before rendering new html
     content.innerHTML = "";
 
-    const homeContainer = document.createElement("div");
-    homeContainer.className = "home-container";
+    // Create main container
+    const homePageFullContainer = document.createElement("div");
+    homePageFullContainer.className = "home-page-full-container";
 
-    const about = createSection("home-about-container", "About",
-        { tag: "p", text: "Serving the best vegan burgers since 2026, here at No Bull Burgers we believe that great food shouldn't come at the expense of an animal's life." },
-        { tag: "br", text: "" },
-        { tag: "p", text: "Living life with more compassion one burger at a time..." }
-    );
+    // Section data
+    const sections = [
+    {
+        header: "About",
+        content: [
+        "Serving the best vegan burgers since 2026, here at No Bull Burgers we believe that great food shouldn't come at the expense of an animal's life.",
+        "Living life with more compassion one burger at a time…"
+        ],
+        addBreak: true
+    },
+    {
+        header: "Dine In & Delivery",
+        content: ["11:00 - 23:00", "Daily"]
+    },
+    {
+        header: "Location",
+        content: ["123 Road Lane, City, AB1 2CD"]
+    }
+    ];
 
-    const openingHours = createSection("home-opening-hours-containers", "Dine in & delivery",
-        { text: "11:00 - 23:00" },
-        { text: "Daily" }
-    );
+    // Build each section
+    sections.forEach(({ header, content, addBreak }) => {
+        const container = document.createElement("div");
+        container.className = "home-page-container";
 
-    const location = createSection("home-location-container", "Location",
-        { text: "123 Road Lane, City, AB1 2CD" }
-    );
+        const headerDiv = document.createElement("div");
+        headerDiv.className = "home-page-header";
+        const h1 = document.createElement("h1");
+        h1.textContent = header;
+        headerDiv.appendChild(h1);
 
-    homeContainer.append(about, openingHours, location)
-    content.append(homeContainer);
+        const contentDiv = document.createElement("div");
+        contentDiv.className = "home-page-content";
+
+        content.forEach((text, index) => {
+            const p = document.createElement("p");
+            p.textContent = text;
+            contentDiv.appendChild(p);
+
+            if (addBreak && index === 0) {
+            contentDiv.appendChild(document.createElement("br"));
+            }
+        });
+        
+        container.append(headerDiv, contentDiv);
+        homePageFullContainer.append(container);
+    });
+
+    content.append(homePageFullContainer);
 }

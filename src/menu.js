@@ -1,11 +1,21 @@
 const content = document.getElementById("content");
 const btn = document.getElementById("menu-btn");
 
+import background from "./images/shawn-TQQE32Gz4jw-unsplash.jpg";
+
 export function menuBtn() {
     btn.addEventListener("click", renderMenu);
 }
 
 function renderMenu() {
+    // Add background
+    const header = document.getElementById("header");
+    header.style.backgroundImage = `url(${background})`;
+
+    // Clear page before rendering new html
+    content.innerHTML = "";
+    
+    // Burgers array
     const burgers = [
         { name: "No Bull Burger", price: "£9.99", desc: "1/4 pound patty, bacon, pickles, mayo & lettuce" },
         { name: "Spicy Nashville",  price: "£8.99", desc: "Hot sauce dipped fillet, pickles, mayo & lettuce" },
@@ -17,113 +27,113 @@ function renderMenu() {
         { name: "No Bull Cheese",  price: "£7.99", desc: "1/4 pound patty, cheese, onions, pickles, ketchup, & mustard" },
     ];
 
+    // Shakes array
     const shakes = [
         { name: "Strawberry"},
         { name: "Chocolate"},
         { name: "Banana"},
         { name: "Peanut Butter"},
-        { name: "Coffee"}
     ];
 
-    function createBurgerItem({ name, price, desc }) {
-        const item = document.createElement("div");
+    const shakesPrices = [
+        { size: "Regular", price: "£3.49" },
+        { size: "Large", price: "£4.99" },
+    ];
 
-        const itemContainer = document.createElement("div");
-        itemContainer.className = "menu-item";
+    // Helper function to create element with optional className and textContent
+    const createElement = (tag, className = null, textContent = null) => {
+        const el = document.createElement(tag);
+        if (className) el.className = className;
+        if (textContent) el.textContent = textContent;
 
-        const nameEl = document.createElement("h2");
-        nameEl.textContent = name;
+        return el;
+    };
 
-        const priceEl = document.createElement("h2");
-        priceEl.textContent = price;
+    // Create main container
+    const menuPageFullContainer = createElement("div", "menu-page-full-container");
 
-        const descEl = document.createElement("div");
-        descEl.textContent = desc;
+    // Menu header section
+    const menuPageContainer = createElement("div", "menu-page-container");
+    const menuPageHeader = createElement("div", "menu-page-header");
+    menuPageHeader.append(createElement("h1", null, "Menu"));
+    
+    const menuPageContent = createElement("div", "menu-page-content");
+    menuPageContent.append(createElement("p", null, "Our menu is 100% vegan"));
+    menuPageContainer.append(menuPageHeader, menuPageContent);
+    menuPageFullContainer.append(menuPageContainer);
 
-        itemContainer.append(nameEl, priceEl);
-        item.append(itemContainer, descEl);
-        return item;
-    }
+    // Menu body section
+    const menuBody = createElement("div", "menu-page-container");
+    menuPageFullContainer.append(menuBody);
 
-    function createShakesItem({ name }) {
-        const item = document.createElement("div");
+    // Burgers section
+    const burgersContainer = createElement("div", "menu-body-container");
+    const burgersHeaderContainer = createElement("div", "menu-page-container");
+    const burgersHeader = createElement("div", "menu-page-header");
+    burgersHeader.append(createElement("h1", null, "Burgers"));
 
-        const itemContainer = document.createElement("div");
-        itemContainer.className = "menu-item";
+    const burgersContent = createElement("div", "menu-page-content");
+    burgersContent.append(createElement("p", null, "All burgers are served with a side of fries"));
+    burgersHeaderContainer.append(burgersHeader, burgersContent);
+    burgersContainer.append(burgersHeaderContainer);
 
-        const nameEl = document.createElement("h2");
-        nameEl.textContent = name;
+    const burgersMenuContainer = createElement("div", "menu-item-container");
+    burgersContainer.append(burgersMenuContainer);
 
-        itemContainer.append(nameEl);
-        item.append(itemContainer);
-        return item;
-    }
+    burgers.forEach(({ name, price, desc }) => {
+        const burgerItemContainer = createElement("div", "menu-item");
 
-    content.innerHTML = "";
+        const menuItemHeader = createElement("div", "menu-page-header");
+        menuItemHeader.appendChild(createElement("h1", null, name));
+        menuItemHeader.appendChild(createElement("h1", null, price));
 
-    // Menu Header
-    const menuHeader = document.createElement("div");
-    menuHeader.className = "menu-container-header";
+        const menuItemDesc = createElement("div", "menu-page-content");
+        menuItemDesc.append(createElement("p", null, desc));
 
-    const header = document.createElement("h1");
-    header.textContent = "Menu";
+        burgerItemContainer.append(menuItemHeader, menuItemDesc);
+        burgersMenuContainer.append(burgerItemContainer);
+    });
 
-    const menuFooter = document.createElement("p");
-    menuFooter.textContent = "Our menu is 100% vegan";
+    menuBody.append(burgersContainer);
 
-    menuHeader.append(header, menuFooter)
+    // Shakes section
+    const shakesContainer = createElement("div", "menu-body-container");
+    const shakesHeaderContainer = createElement("div", "menu-page-container");
+    const shakesHeader = createElement("div", "menu-page-header");
+    shakesHeader.append(createElement("h1", null, "Shakes"));
 
-    // Burgers
-    const burgerMenuHeader = document.createElement("div");
-    burgerMenuHeader.className = "menu-container-header";
+    const shakesPricesContainer = createElement("div", "shakes-prices-container");
 
-    const burgerHeader = document.createElement("h1");
-    burgerHeader.textContent = "Burgers";
 
-    const burgerFooter = document.createElement("p");
-    burgerFooter.textContent = "All burgers are served with a side of fries";
+    shakesPrices.forEach(({ size, price }) => {
+        const shakesPrices = createElement("div", "shakes-prices");
+        shakesPrices.appendChild(createElement("h2", null, size));
+        shakesPrices.appendChild(createElement("h1", null, price));
 
-    burgerMenuHeader.append(burgerHeader, burgerFooter);
+        shakesPricesContainer.append(shakesPrices);
+    });
 
-    const burgerMenu = document.createElement("div");
-    burgerMenu.className = "menu-container";
-    burgerMenu.append(...burgers.map(createBurgerItem));
+    shakesHeader.append(shakesPricesContainer);
+    
+    const shakesContent = createElement("div", "menu-page-content");
+    shakesContent.append(createElement("p", null, "All shakes are made from an option of soya, oat, coconut or almond milk"));
+    shakesHeaderContainer.append(shakesHeader, shakesContent);
+    shakesContainer.append(shakesHeaderContainer);
 
-    // Shakes
-    const shakesMenuHeader = document.createElement("div");
-    shakesMenuHeader.className = "menu-container-header";
+    const shakesMenuContainer = createElement("div", "menu-item-container");
+    shakesContainer.append(shakesMenuContainer);
 
-    const shakesHeader = document.createElement("h1");
-    shakesHeader.textContent = "Shakes";
+    shakes.forEach(({ name }) => {
+        const shakesItemContainer = createElement("div", "menu-item");
 
-    const shakespriceContainer = document.createElement("div");
-    shakespriceContainer.className = "shakes-prices-container";
+        const menuItemHeader = createElement("div", "menu-page-header");
+        menuItemHeader.append(createElement("h1", null, name));
+        
+        shakesItemContainer.append(menuItemHeader);
+        shakesMenuContainer.append(shakesItemContainer);
+    });
 
-    const regCon = document.createElement("div");
-    const reg = document.createElement("div");
-    reg.textContent = "Regular";
+    menuBody.append(shakesContainer);
 
-    const regPrice = document.createElement("h2");
-    regPrice.textContent = "£3.49";
-
-    const lrgCon = document.createElement("div");
-    const lrg = document.createElement("div");
-    lrg.textContent = "Large";
-
-    const lrgPrice = document.createElement("h2");
-    lrgPrice.textContent = "£4.99";
-
-    const shakesFooter = document.createElement("p");
-    shakesFooter.textContent = "All shakes are made from an option of soya, oat, coconut or almond milk";
-
-    regCon.append(reg, regPrice);
-    lrgCon.append(lrg, lrgPrice);
-    shakespriceContainer.append(regCon, lrgCon);
-    shakesMenuHeader.append(shakesHeader, shakespriceContainer, shakesFooter);
-
-    const shakesMenu = document.createElement("div");
-    shakesMenu.className = "menu-container";
-    shakesMenu.append(...shakes.map(createShakesItem))
-
-    content.append(menuHeader, burgerMenuHeader, burgerMenu, shakesMenuHeader, shakesMenu);
+    content.append(menuPageFullContainer);
 }
