@@ -16,7 +16,7 @@ Full project specs can be found [here](https://www.theodinproject.com/lessons/no
 
 * https://unsplash.com/photos/red-and-black-chairs-and-table-TQQE32Gz4jw
 
-* Menu inspired by [Temple of Seitan](https://www.templeofseitan.co.uk/)
+* Menu and style guide inspired by [Temple of Seitan](https://www.templeofseitan.co.uk/)
 
 ---
 
